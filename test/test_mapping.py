@@ -3,11 +3,6 @@
 # Imports                                                                     #
 ###############################################################################
 
-import unittest
-
-from unittest import mock
-from unittest.mock import MagicMock
-
 
 ###############################################################################
 # Unit under test                                                             #
@@ -25,38 +20,6 @@ from .. import mapping
 # TestCases                                                                   #
 ###############################################################################
 
-class TestCase(unittest.TestCase):
-    """TestCase for method"""
-
-    @classmethod
-    def classSetUp():
-        pass
-
-    @classmethod
-    def classTearDown():
-        pass
-
-    def setUp(self):
-        """Set up test fixture before each unit test"""
-        pass
-
-    def tearDown(self):
-        """Tear down text fixture after each unit test"""
-        pass
-
-    def test_test(self):
-        assert True
-        print("testing testy test")    
-
-
-###############################################################################
-# Helper functions                                                            #
-###############################################################################
-
-
-###############################################################################
-# Main script                                                                 #
-###############################################################################
-
-if __name__ == '__main__':
-    unittest.main()
+def test_test():
+    assert True
+    print("testing testy test")    
