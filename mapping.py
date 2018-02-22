@@ -11,7 +11,7 @@ between image and blueprint coordinates.
 ###############################################################################
 
 import argparse
-# from collections import namedtuple
+import numpy as np
 
 
 ###############################################################################
@@ -51,6 +51,14 @@ def blueprint_to_image(blueprint_coord):
 ###############################################################################
 # Helper functions                                                            #
 ###############################################################################
+
+def norm(vec):
+    return np.linalg.norm(vec)
+
+
+def normalize(vec):
+    return vec / norm(vec)
+
 
 def format_coord(coord):
     return "{}\n{}".format(*coord)
