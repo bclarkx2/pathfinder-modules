@@ -26,12 +26,63 @@ OPERATIONS = [
     IMAGE_TO_BLUEPRINT
 ]
 
+
 ###############################################################################
 # Classes                                                                     #
 ###############################################################################
 
-# ImageCoord = namedtuple("ImageCoord", ["x", "y"])
-# BlueprintCoord = namedtuple("BlueprintCoord", ["u", "v"])
+class Geometry(object):
+    """Describes camera geometry"""
+
+    def make(self, image_corners, distances):
+        """Geometry builder -- good for error checking"""
+        pass
+
+    def __init__(self, image_corners, distances):
+        super(Geometry, self).__init__()
+        self.image_corners = Geometry.add_zs(image_corners)
+        self.distances = distances
+
+        self.map_corners = Geometry.project_corners(self.image_corners,
+                                                    distances)
+
+        self.top_left_map_corner = self.map_corners[0]
+
+        self.normal = Geometry.compute_normal(self.map_corners)
+
+    @staticmethod
+    def compute_normal(map_corners):
+        m_a, m_b, m_c = map_corners[0:3]
+        m_ab = m_b - m_a
+        m_ac = m_c - m_a
+        n = normalize(np.cross(m_ab, m_ac))
+        return n
+
+    @staticmethod
+    def add_zs(pairs):
+        return [Geometry.add_z(pair) for pair in pairs]
+
+    @staticmethod
+    def add_z(pair):
+        return np.array(pair + [1])
+
+    @staticmethod
+    def project_corners(image_corners, distances):
+        return [Geometry.project_corner(ic, d)
+                for ic, d in zip(image_corners, distances)]
+
+    @staticmethod
+    def project_corner(image_corner, distance):
+        scale = distance / norm(image_corner)
+        map_corner = scale * image_corner
+        return map_corner
+
+    def transform(self, image_coord):
+        image_vector = Geometry.add_z(image_coord)
+        scale = (np.dot(self.normal, self.top_left_map_corner) /
+                 np.dot(self.normal, image_vector))
+        blueprint_coord = scale * image_vector
+        return blueprint_coord
 
 
 ###############################################################################
