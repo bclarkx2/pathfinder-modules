@@ -90,6 +90,10 @@ class Geometry(object):
 ###############################################################################
 
 def image_to_blueprint(image_coord):
+    '''Map image coordinates to blueprint coordinates
+
+    Input: (x,y)
+    '''
     blueprint_coord = image_coord
     return blueprint_coord
 
