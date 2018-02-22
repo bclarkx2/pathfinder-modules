@@ -1,5 +1,11 @@
 #! /usr/bin/env python3
 
+'''Mapping module
+
+The mapping.py module provides several functions for transforming
+between image and blueprint coordinates.
+'''
+
 ###############################################################################
 # Imports                                                                     #
 ###############################################################################
