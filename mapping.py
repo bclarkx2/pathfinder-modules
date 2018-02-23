@@ -151,11 +151,11 @@ def main():
     geometry = Geometry.from_file(args.manifest)
 
     if args.op == BLUEPRINT_TO_IMAGE:
-        coord = blueprint_to_image(coord, geometry)
+        transformed = blueprint_to_image(coord, geometry)
     elif args.op == IMAGE_TO_BLUEPRINT:
-        coord = image_to_blueprint(coord, geometry)
+        transformed = image_to_blueprint(coord, geometry)
 
-    print(format_coord(coord))
+    print(format_coord(transformed))
 
 
 if __name__ == '__main__':
