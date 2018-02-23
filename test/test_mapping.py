@@ -69,9 +69,9 @@ def sample_geom():
 # TestCases                                                                   #
 ###############################################################################
 
-def test_transform_corners(sample_geom, pixel_coords, map_corners):
+def test_transform_itb_corners(sample_geom, pixel_coords, map_corners):
     for pixel_coord, map_corner in zip(pixel_coords, map_corners):
-        transformed = sample_geom.transform(pixel_coord)
+        transformed = sample_geom.transform_itb(pixel_coord)
         assert_close(map_corner, transformed)
 
 

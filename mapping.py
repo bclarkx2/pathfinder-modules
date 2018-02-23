@@ -34,7 +34,13 @@ OPERATIONS = [
 class Geometry(object):
     """Describes camera geometry"""
 
-    def make(self, image_corners, distances):
+    @staticmethod
+    def from_file(manifest):
+        """tool for making a Geometry object from a manifest"""
+        pass
+
+    @staticmethod
+    def make(image_corners, distances):
         """Geometry builder -- good for error checking"""
         pass
 
@@ -77,7 +83,7 @@ class Geometry(object):
         map_corner = scale * image_corner
         return map_corner
 
-    def transform(self, image_coord):
+    def transform_itb(self, image_coord):
         image_vector = Geometry.add_z(image_coord)
         scale = (np.dot(self.normal, self.top_left_map_corner) /
                  np.dot(self.normal, image_vector))
@@ -89,12 +95,12 @@ class Geometry(object):
 # Mapping Functions                                                           #
 ###############################################################################
 
-def image_to_blueprint(image_coord):
+def image_to_blueprint(image_coord, geometry):
     '''Map image coordinates to blueprint coordinates
 
     Input: (x,y)
     '''
-    blueprint_coord = image_coord
+    blueprint_coord = geometry.transform_itb(image_coord)
     return blueprint_coord
 
 
@@ -141,10 +147,13 @@ def main():
 
     args = get_args()
 
+    coord = args.coord
+    geometry = Geometry.from_file(args.manifest)
+
     if args.op == BLUEPRINT_TO_IMAGE:
-        coord = blueprint_to_image(tuple(args.coord))
+        coord = blueprint_to_image(coord, geometry)
     elif args.op == IMAGE_TO_BLUEPRINT:
-        coord = image_to_blueprint(tuple(args.coord))
+        coord = image_to_blueprint(coord, geometry)
 
     print(format_coord(coord))
 
