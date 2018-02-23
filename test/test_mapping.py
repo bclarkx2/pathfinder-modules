@@ -69,6 +69,13 @@ def sample_geom():
 # TestCases                                                                   #
 ###############################################################################
 
+def test_transform_itb_middle(sample_geom):
+    image_coord = [0.333, 0.165]
+    blueprint_coord = [1.0, 0.5, 3.0]
+    assert_close(blueprint_coord,
+                 sample_geom.transform_itb(image_coord))
+
+
 def test_transform_itb_corners(sample_geom, pixel_coords, map_corners):
     for pixel_coord, map_corner in zip(pixel_coords, map_corners):
         transformed = sample_geom.transform_itb(pixel_coord)
